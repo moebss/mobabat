@@ -91,7 +91,7 @@ export default function FirstLevelSupport() {
             >
               <div className="absolute inset-0 bg-gradient-to-tl from-pink-400/20 to-orange-500/20 rounded-full blur-3xl animate-pulse" />
               <img
-                src="/hero_3d_firstlevel.png"
+                src={`${import.meta.env.BASE_URL}hero_3d_firstlevel.png`}
                 alt="Abstract Glowing Rings"
                 className="relative z-10 w-full h-auto object-contain drop-shadow-2xl animate-float"
                 style={{ animationDuration: '7.5s' }}

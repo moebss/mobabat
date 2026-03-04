@@ -92,7 +92,7 @@ export default function CloudSupport() {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-cyan-400/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
               <img
-                src="/hero_3d_cloud.png"
+                src={`${import.meta.env.BASE_URL}hero_3d_cloud.png`}
                 alt="Abstract 3D Cloud Data"
                 className="relative z-10 w-full h-auto object-contain drop-shadow-2xl animate-float"
                 style={{ animationDuration: '7s' }}

@@ -95,7 +95,7 @@ export default function Home() {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse" />
               <img
-                src="/hero_3d_home.png"
+                src={`${import.meta.env.BASE_URL}hero_3d_home.png`}
                 alt="Abstract 3D Glass Sphere"
                 className="relative z-10 w-full h-auto object-contain drop-shadow-2xl animate-float"
                 style={{ animationDuration: '6s' }}

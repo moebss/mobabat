@@ -36,6 +36,7 @@ export default function App() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLegalModalOpen, setIsLegalModalOpen] = useState<'impressum' | 'datenschutz' | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -134,7 +135,7 @@ export default function App() {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigateTo('home')}>
-              <img src="/logo.png" alt="EIN-FACHER Logo" className="w-10 h-10 rounded-xl shadow-lg shadow-blue-600/25 group-hover:shadow-blue-600/40 transition-shadow duration-300" />
+              <img src={`${import.meta.env.BASE_URL}logo.png`} alt="EIN-FACHER Logo" className="w-10 h-10 rounded-xl shadow-lg shadow-blue-600/25 group-hover:shadow-blue-600/40 transition-shadow duration-300" />
               <span className="font-bold text-xl tracking-tight text-slate-900 group-hover:text-blue-700 transition-colors">EIN-FACHER</span>
             </div>
 
@@ -217,7 +218,7 @@ export default function App() {
             {/* Brand */}
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <img src="/logo.png" alt="EIN-FACHER Logo" className="w-10 h-10 rounded-xl shadow-lg shadow-blue-500/20" />
+                <img src={`${import.meta.env.BASE_URL}logo.png`} alt="EIN-FACHER Logo" className="w-10 h-10 rounded-xl shadow-lg shadow-blue-500/20" />
                 <span className="font-bold text-xl tracking-tight">EIN-FACHER</span>
               </div>
               <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
@@ -250,8 +251,8 @@ export default function App() {
               &copy; {new Date().getFullYear()} EIN-FACHER. Alle Rechte vorbehalten.
             </div>
             <div className="flex gap-6 text-sm font-medium text-slate-500">
-              <a href="#" className="hover:text-white transition-colors">Impressum</a>
-              <a href="#" className="hover:text-white transition-colors">Datenschutz</a>
+              <button onClick={() => setIsLegalModalOpen('impressum')} className="hover:text-white transition-colors">Impressum</button>
+              <button onClick={() => setIsLegalModalOpen('datenschutz')} className="hover:text-white transition-colors">Datenschutz</button>
             </div>
           </div>
         </div>
