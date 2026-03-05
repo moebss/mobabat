@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion } from 'motion/react';
+import { motion, useMotionValue, useTransform } from 'motion/react';
 import { Zap, TrendingUp, Users, HeartHandshake, Ticket, MessageCircle, Clock, ArrowRight } from 'lucide-react';
 
 function SpotlightCard({ children, className = '' }: { children: React.ReactNode, className?: string }) {
@@ -26,6 +26,25 @@ function SpotlightCard({ children, className = '' }: { children: React.ReactNode
 }
 
 export default function FirstLevelSupport() {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useTransform(y, [-300, 300], [15, -15]);
+  const rotateY = useTransform(x, [-300, 300], [-15, 15]);
+
+  function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set(event.clientX - centerX);
+    y.set(event.clientY - centerY);
+  }
+
+  function handleMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
   return (
     <div className="relative overflow-hidden noise-bg">
       {/* ─── Hero Section ─── */}
@@ -40,7 +59,7 @@ export default function FirstLevelSupport() {
           <div className="absolute bottom-[-150px] left-1/3 w-[400px] h-[400px] bg-pink-400/10 rounded-full blur-[100px] animate-blob animation-delay-4000" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20 relative w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
@@ -82,21 +101,29 @@ export default function FirstLevelSupport() {
               </motion.div>
             </motion.div>
 
-            {/* 3D Asset */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-              className="relative hidden lg:block"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tl from-pink-400/20 to-orange-500/20 rounded-full blur-3xl animate-pulse" />
-              <img
-                src={`${import.meta.env.BASE_URL}hero_3d_firstlevel.png`}
-                alt="Abstract Glowing Rings"
-                className="relative z-10 w-full h-auto object-contain drop-shadow-2xl animate-float"
-                style={{ animationDuration: '7.5s' }}
-              />
-            </motion.div>
+            {/* 3D Asset Wrapper with Perspective */}
+            <div className="relative hidden lg:block w-full h-full" style={{ perspective: 1000 }}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                className="w-full h-full flex items-center justify-center relative z-10"
+                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+              >
+                <div
+                  className="absolute inset-0 bg-gradient-to-tl from-pink-400/20 to-orange-500/20 rounded-full blur-3xl animate-pulse"
+                  style={{ transform: "translateZ(-40px)" }}
+                />
+                <img
+                  src={`${import.meta.env.BASE_URL}hero_3d_firstlevel.png`}
+                  alt="Abstract Glowing Rings"
+                  className="relative z-10 w-full h-auto object-contain animate-float"
+                  style={{ animationDuration: '7.5s', transform: "translateZ(60px)" }}
+                />
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>

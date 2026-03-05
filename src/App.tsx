@@ -4,6 +4,7 @@ import { Menu, X, MessageSquare, Send, Bot, Loader2, Sparkles, ArrowUpRight } fr
 import { GoogleGenAI } from '@google/genai';
 import Markdown from 'react-markdown';
 
+import { PageTransition } from './components/PageTransition';
 import Home from './pages/Home';
 import CloudSupport from './pages/CloudSupport';
 import LocalSupport from './pages/LocalSupport';
@@ -112,15 +113,15 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <Home />;
+        return <Home key="home" />;
       case 'cloud':
-        return <CloudSupport />;
+        return <CloudSupport key="cloud" />;
       case 'local':
-        return <LocalSupport />;
+        return <LocalSupport key="local" />;
       case 'ferstlevel':
-        return <FirstLevelSupport />;
+        return <FirstLevelSupport key="firstlevel" />;
       default:
-        return <Home />;
+        return <Home key="home" />;
     }
   };
 
@@ -202,7 +203,11 @@ export default function App() {
 
       {/* ─── Main Content ─── */}
       <main>
-        {renderPage()}
+        <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
+          <PageTransition key={currentPage}>
+            {renderPage()}
+          </PageTransition>
+        </AnimatePresence>
       </main>
 
       {/* ─── Footer ─── */}
